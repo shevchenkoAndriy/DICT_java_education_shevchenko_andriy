@@ -1,5 +1,8 @@
+import ChatBot.ChatBot;
+
 public class Test {
     public static void main(String[] args) {
-        System.out.println("Java education");
+        ChatBot chatBot = new ChatBot("Elena", 2022);
+        chatBot.sayHi();
     }
 }
