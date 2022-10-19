@@ -7,5 +7,6 @@ public class Test {
         chatBot.askName();
         chatBot.guessUserAge();
         chatBot.countPositiveNumber();
+        chatBot.passTest();
     }
 }

@@ -48,7 +48,7 @@ public class ChatBot {
         int remainder5 = correctInputInt("The remainder of the division for 5 > ");
         int remainder7 = correctInputInt("The remainder of the division for 7 > ");
         int userAge = calcUserAge(remainder3, remainder5, remainder7) ;
-        System.out.printf("Your age is %s; that's a good time to start programming!", userAge);
+        System.out.printf("Your age is %s; that's a good time to start programming!\n", userAge);
     }
     public void countPositiveNumber(){
         System.out.println("Now I will prove to you that I can count to any number you want.");
@@ -56,5 +56,30 @@ public class ChatBot {
         for (int i = 0; i <= maxNumber; i+=1){
             System.out.printf("%d !\n", i);
         }
+    }
+    public void passTest(){
+        System.out.println("Let's test your programing knowledge");
+        System.out.println("What is correct syntax for main method of a java class?");
+        System.out.println("""
+                1. public static int main(String[] args)
+
+                2. public int main(String[] args)
+
+                3. public static void main(String[] args)
+
+                4. None of the above.
+                """);
+
+        while (true){
+            int userAnswer = correctInputInt("Your answer > ");
+            if (userAnswer != 3){
+                System.out.println("Please try again");
+                continue;
+            }
+
+            break;
+        }
+        System.out.println("Great, you right!");
+        System.out.println("Goodbye, have a nice day");
     }
 }
