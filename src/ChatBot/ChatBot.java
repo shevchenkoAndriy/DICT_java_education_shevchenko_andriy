@@ -50,4 +50,11 @@ public class ChatBot {
         int userAge = calcUserAge(remainder3, remainder5, remainder7) ;
         System.out.printf("Your age is %s; that's a good time to start programming!", userAge);
     }
+    public void countPositiveNumber(){
+        System.out.println("Now I will prove to you that I can count to any number you want.");
+        int maxNumber = correctInputInt("Your number > ");
+        for (int i = 0; i <= maxNumber; i+=1){
+            System.out.printf("%d !\n", i);
+        }
+    }
 }
