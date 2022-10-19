@@ -5,5 +5,6 @@ public class Test {
         ChatBot chatBot = new ChatBot("Elena", 2022);
         chatBot.sayHi();
         chatBot.askName();
+        chatBot.guessUserAge();
     }
 }
