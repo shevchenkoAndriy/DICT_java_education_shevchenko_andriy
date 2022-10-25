@@ -1,12 +1,8 @@
-import ChatBot.ChatBot;
+import Hangman.Hangman;
 
 public class Test {
     public static void main(String[] args) {
-        ChatBot chatBot = new ChatBot("Elena", 2022);
-        chatBot.sayHi();
-        chatBot.askName();
-        chatBot.guessUserAge();
-        chatBot.countPositiveNumber();
-        chatBot.passTest();
+       Hangman hangman = new Hangman();
+       hangman.showAnnouncement();
     }
 }
