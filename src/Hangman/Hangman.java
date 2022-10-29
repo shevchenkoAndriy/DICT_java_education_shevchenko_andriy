@@ -1,6 +1,7 @@
 package Hangman;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Hangman {
     private final Random rand = new Random();
@@ -40,19 +41,40 @@ public class Hangman {
         }
         return new String(guessedWord);
     }
+    private boolean checkIsContinue(){
+        System.out.print("Continue? y/n : ");
+        String userInput = scanner.nextLine();
+        if (userInput.equalsIgnoreCase("")){
+            return true;
+        } else if (userInput.equalsIgnoreCase("y")) {
+            return true;
+        } else if (userInput.equalsIgnoreCase("n")) {
+            return false;
+        } else {
+            System.out.println("Incorrect answer");
+            checkIsContinue();
+            return false;
+        }
+    }
     private String correctInputLetter(){
         String userInput;
         while (true){
             userInput = scanner.nextLine().trim().toLowerCase();
+            boolean correctLetter = Pattern.matches("[a-z]", userInput);
+            if (!correctLetter){
+                System.out.print("Please enter a lowercase English letter > ");
+                continue;
+            }
 
             if (userInput.length() == 1){
                 return userInput;
             }
             else {
-                System.out.print("Please input one letter > ");
+                System.out.print("Please enter a lowercase English letter > ");
             }
         }
     }
+
     public void start(List<String> wordList){
         int attempts = 8;
         boolean isWin;
@@ -66,7 +88,6 @@ public class Hangman {
             String answer = correctInputLetter();
             if (usedLetters.contains(answer)) {
                 System.out.println("You already used this letter");
-                attempts -= 1;
             }
             else if (word.contains(answer)){
                 guessedWord = openLetters(guessedWord, word, answer);
@@ -79,5 +100,9 @@ public class Hangman {
         }
         isWin = guessedWord.equals(word);
         showResultGame(isWin);
+        boolean isContinue = checkIsContinue();
+        if (isContinue){
+            start(wordList);
+        }
     }
 }
