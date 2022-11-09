@@ -1,12 +1,12 @@
-import ChatBot.ChatBot;
+import Hangman.Hangman;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        ChatBot chatBot = new ChatBot("Elena", 2022);
-        chatBot.sayHi();
-        chatBot.askName();
-        chatBot.guessUserAge();
-        chatBot.countPositiveNumber();
-        chatBot.passTest();
+        List<String> wordList = Arrays.asList("python", "java", "kotlin", "javascript");
+        Hangman hangman = new Hangman();
+        hangman.start(wordList);
     }
 }
