@@ -13,9 +13,7 @@ public class CoffeeMachine {
 
     private int money;
 
-    private final Set<String> actions = Set.of("buy", "fill", "take");
-
-    private final Scanner scanner = new Scanner(System.in);
+    private final Set<String> actions = Set.of("buy", "fill", "remaining", "take", "exit");
 
     public CoffeeMachine(int water, int milk, int grain, int cups, int money){
         this.water = water;
@@ -68,18 +66,17 @@ public class CoffeeMachine {
     }
 
     public void menu(){
-        showCurrentState();
-        String action = selectActions("Write action (buy, fill, take): > ", this.actions);
-        
-        if (Objects.equals(action, "buy")){
-            saleMode();
-        } else if (Objects.equals(action, "fill")) {
-            fillMode();
-        } else if (Objects.equals(action, "take")) {
-            takeMode();
-        }
-        else {
-            return;
+        String action = selectActions("Write action" +
+                " (buy, fill, take, remaining, exit): > ", this.actions);
+
+        switch (action){
+            case "buy" -> saleMode();
+            case "fill" -> fillMode();
+            case "take" -> takeMode();
+            case "remaining" -> showCurrentState();
+            case "exit" -> {
+                return;
+            }
         }
         menu();
     }
@@ -91,16 +88,23 @@ public class CoffeeMachine {
 
     private void fillMode() {
         this.water += correctInputInt("Write how many ml of water you want to add: > ");
-        this.cups += correctInputInt("Write how many disposable coffee cups you want to add:> ");
+        this.cups += correctInputInt("Write how many disposable coffee cups you want to add: > ");
         this.milk += correctInputInt("Write how many ml of milk you want to add: > ");
         this.grain += correctInputInt("Write how many grams of coffee beans you want to add: > ");
     }
 
     private void saleMode() {
+        Set<String> actions = new HashSet<>(Coffee.actions.keySet());
+        actions.add("back");
+        String selectedActions = selectActions("""
+                        What do you want to buy?
+                        1 - espresso, 2 - latte, 3 - cappuccino,
+                        back – to main menu: >\s""", actions
+                );
 
-        String selectedActions = selectActions("What do you want to buy?" +
-                        " 1 - espresso, 2 - latte, 3 - cappuccino: > ",
-                Coffee.actions.keySet());
+        if (Objects.equals(selectedActions, "back")){
+            return;
+        }
 
         Map<String, Integer> selectedCoffee = Coffee.actions.get(selectedActions);
 
@@ -117,12 +121,11 @@ public class CoffeeMachine {
                 System.out.println("Sorry, not enough water!");
                 return false;
             } else if (this.grain < needIngredients.get("grain")) {
-                System.out.println("Sorry, not enough beans!");
+                System.out.println("Sorry, not enough grain!");
                 return false;
             } else if (this.milk < needIngredients.getOrDefault("milk", 0)) {
                 System.out.println("Sorry, not enough milk!");
                 return false;
-
             } else if (this.cups < 1) {
                 System.out.println("Sorry, not enough cups!");
                 return false;
@@ -136,9 +139,11 @@ public class CoffeeMachine {
         this.grain -= selectedCoffee.get("grain");
         this.money += selectedCoffee.get("price");
         this.cups -= 1;
+        System.out.println("Success. Your coffee is ready!");
     }
 
     private int correctInputInt(String label){
+        Scanner scanner = new Scanner(System.in);
         System.out.print(label);
 
         while (true) {
@@ -153,13 +158,15 @@ public class CoffeeMachine {
     }
 
     private String selectActions(String label, Collection<String> actions){
+        Scanner scanner = new Scanner(System.in);
         System.out.print(label);
+
         while (true){
-           String selectedAction = scanner.nextLine();
+            String selectedAction = scanner.nextLine();
             if (actions.contains(selectedAction)){
                 return selectedAction;
             }
-            else {
+            else  {
                 System.out.print("Please input correct actions > ");
             }
         }
